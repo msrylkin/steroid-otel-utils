@@ -58,7 +58,7 @@ export class SteroidExporter implements SpanExporter {
 
         axios.post(url, { queries }, { headers: {
             token
-        } }).then(() => resultCallback({ code: ExportResultCode.SUCCESS }));
+        } }).then(() => resultCallback({ code: ExportResultCode.SUCCESS })).catch(e => console.log(e));
     }
     shutdown(): Promise<void> {
         return Promise.resolve();
