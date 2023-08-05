@@ -4,7 +4,7 @@ import { ExportResult, ExportResultCode } from '@opentelemetry/core';
 import axios from 'axios';
 import { SteroidStackEntry } from './types';
 
-const url = 'http://localhost:3088/dev/trace'
+const url = 'http://127.0.0.1:3088/dev/trace'
 const token = 'example';
 
 interface CodePlaceable {
