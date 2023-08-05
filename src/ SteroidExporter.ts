@@ -2,12 +2,10 @@ import { SpanExporter, ReadableSpan } from '@opentelemetry/sdk-trace-base';
 import { ExportResult, ExportResultCode } from '@opentelemetry/core';
 
 import axios from 'axios';
-import { SteroidExportEntry, SteroidStackEntry } from './types';
+import { SteroidStackEntry } from './types';
 
 const url = 'http://localhost:3088/dev/trace'
-const root = process.cwd();
 const token = 'example';
-console.log('root', root);
 
 interface CodePlaceable {
     fileName: string;
