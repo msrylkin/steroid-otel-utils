@@ -4,7 +4,8 @@ import { ExportResult, ExportResultCode } from '@opentelemetry/core';
 import axios from 'axios';
 import { SteroidStackEntry } from './types';
 
-const url = 'http://127.0.0.1:3088/dev/trace'
+const baseUrl = 'https://ly2jrkewbd.execute-api.us-east-1.amazonaws.com';
+const tracePath = '/dev/trace'
 const token = 'example';
 
 interface CodePlaceable {
@@ -19,6 +20,12 @@ interface QueryItem extends CodePlaceable {
 }
 
 export class SteroidExporter implements SpanExporter {
+    url: string;
+
+    constructor({ apiUrl }: { apiUrl?: string } = {}) {
+        this.url = `${apiUrl || baseUrl}${tracePath}`;
+    }
+
     export(spans: ReadableSpan[], resultCallback: (result: ExportResult) => void): void {
         const steroidSpans: ReadableSpan[] = spans.filter(span => !!span.attributes && span.attributes['steroid.trace']);
         const queries: QueryItem[] = [];
@@ -54,7 +61,7 @@ export class SteroidExporter implements SpanExporter {
             }
         }
 
-        axios.post(url, { queries }, { headers: {
+        axios.post(this.url, { queries }, { headers: {
             token
         } }).then(() => resultCallback({ code: ExportResultCode.SUCCESS })).catch(e => console.log(e));
     }
